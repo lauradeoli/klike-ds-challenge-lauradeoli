@@ -1,6 +1,6 @@
 ## 1. Setup e compreensão dos dados
-- [ ] Criar repositório Git e estrutura inicial
-- [ ] Configurar ambiente Python e dependências
+- [x] Criar repositório Git e estrutura inicial
+- [x] Configurar ambiente Python e dependências
 - [ ] Carregar CSV e examinar colunas, tipos e amostras
 - [ ] Identificar perguntas analíticas e métricas relevantes
 
