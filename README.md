@@ -108,20 +108,20 @@ Foram selecionadas três visualizações para comunicar os principais insights d
 
 **Gráfico 1 — CTR mediano por presença de hook e plataforma**
 
-![Gráfico 1 — CTR mediano por presença de hook e plataforma](images\CTR-hook-plataforma-1.png)
+![Gráfico 1 — CTR mediano por presença de hook e plataforma](images/CTR-hook-plataforma-1.png)
 
 
 A presença de hook está associada a CTR mediano superior nas três plataformas, destacando sua possível relevância para campanhas que buscam atrair cliques.
 
 **Gráfico 2 — ROAS mediano por presença de hook e plataforma**
 
-![Gráfico 2 — ROAS mediano por presença de hook e plataforma](images\ROAS-hook-plataforma-2.png)
+![Gráfico 2 — ROAS mediano por presença de hook e plataforma](images/ROAS-hook-plataforma-2.png)
 
 A associação entre hook e retorno financeiro varia conforme a plataforma. O resultado mostra por que não devemos utilizar apenas o CTR como referência para avaliar a performance.
 
 **Gráfico 3 — CTR mediano por densidade de texto e plataforma**
 
-![Gráfico 3 — CTR mediano por densidade de texto e plataforma](images\CTR-texto-plataforma-3.png)
+![Gráfico 3 — CTR mediano por densidade de texto e plataforma](images/CTR-texto-plataforma-3.png)
 
 Criativos com alta densidade de texto apresentam CTR mediano inferior aos demais grupos nas três plataformas, sugerindo uma possível oportunidade de otimização.
 
