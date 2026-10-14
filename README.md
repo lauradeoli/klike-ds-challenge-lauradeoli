@@ -178,6 +178,10 @@ O dataset foi dividido em 80% para treinamento e 20% para teste. Os modelos fora
 
 Ambos os modelos de regressão superaram o baseline, indicando que as features selecionadas contêm informações úteis para prever o `klike_score`, mesmo sem métricas de performance pós-veiculação.
 
+**Interpretação prática:** considerando que o `klike_score` varia de 0 a 100, o MAE de 8,59 indica que as previsões do Ridge apresentam um erro absoluto médio de aproximadamente 8,6 pontos. Embora represente uma melhoria expressiva em relação ao baseline, essa margem de erro pode ser relevante para o produto, especialmente ao comparar criativos com pontuações próximas.
+
+Por isso, o score previsto deve ser interpretado como uma estimativa de qualidade, e não como uma avaliação exata. Na aplicação prática, seria importante comunicar essa incerteza ao usuário, evitando que pequenas diferenças entre pontuações sejam tratadas como evidências conclusivas de superioridade de um criativo.
+
 ### 2.3 Qual modelo foi selecionado?
 
 Embora o Random Forest tenha apresentado MAE ligeiramente inferior, a comparação entre treino e teste revelou sinais expressivos de *overfitting*: seu R² caiu de 0,940 para 0,614, enquanto o MAE aumentou de 2,93 para 8,31 pontos.
