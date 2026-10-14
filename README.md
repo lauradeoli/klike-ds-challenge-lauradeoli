@@ -47,12 +47,6 @@ source env/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-**5. Execute o Jupyter Notebook**
-
-```bash
-jupyter notebook
-```
-
 Abra o arquivo `notebooks/01_eda.ipynb` para iniciar a exploração dos dados.
 
 ## Estrutura do projeto
@@ -60,16 +54,13 @@ Abra o arquivo `notebooks/01_eda.ipynb` para iniciar a exploração dos dados.
 ```text
 klike-data-science-challenge/
 ├── data/                 # Base de dados
-├── notebooks/            # Análise exploratória e modelagem
+├── notebooks/            # Análise exploratória, modelagem e recomendações
 ├── src/                  # Sistema de recomendações
+├── models/
 ├── .gitignore
 ├── README.md
 └── requirements.txt
 ```
-
-## Status do projeto
-
-🚧 Em desenvolvimento — parte 2 - modelagem.
 
 ## 1. Análise Exploratória dos Dados (EDA)
 
