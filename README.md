@@ -139,3 +139,87 @@ Criativos com alta densidade de texto apresentam CTR mediano inferior aos demais
 Os resultados apresentados representam associações observadas nos dados e não permitem estabelecer causalidade. Além disso, métricas absolutas, como receita e conversões, podem ser influenciadas pela escala das campanhas.
 
 Essas limitações deverão ser consideradas na construção do sistema de recomendações, evitando apresentar diferenças estatísticas observadas como melhorias garantidas.
+
+## 2. Modelagem Preditiva
+
+### 2.1 Quais features foram selecionadas e por quê?
+
+O objetivo da modelagem foi prever o `klike_score` utilizando informações disponíveis **antes da veiculação da campanha**. Essa escolha considera um cenário em que o anunciante deseja avaliar e melhorar seu criativo antes de publicá-lo.
+
+Foram selecionadas 13 features, divididas em dois grupos:
+
+- **Contexto da campanha:** plataforma, categoria, objetivo, faixa etária do público-alvo e retargeting.
+- **Características do criativo:** duração, formato, presença de legendas, CTA, hook, rosto humano, densidade de texto e proporção entre música e voz.
+
+Métricas como CTR, ROAS e conversões foram excluídas por dependerem da veiculação da campanha. Utilizá-las tornaria o modelo incompatível com o cenário de uso escolhido.
+
+**Pré-processamento:** foram utilizados imputação de valores ausentes, One-Hot Encoding para variáveis nominais, Ordinal Encoding para variáveis ordenadas e padronização das numéricas. As transformações foram ajustadas apenas nos dados de treinamento para evitar vazamento de informações.
+
+Não foram criadas features derivadas adicionais. A engenharia de features concentrou-se na seleção e transformação das variáveis disponíveis.
+
+### 2.2 Quais modelos foram treinados e como foram avaliados?
+
+Foram comparados dois modelos de regressão:
+
+- **Ridge Regression:** modelo linear com regularização L2, que oferece simplicidade e facilidade de interpretação.
+- **Random Forest Regressor:** modelo baseado em árvores de decisão, capaz de capturar relações não lineares e interações entre variáveis.
+
+Também foi utilizado um `DummyRegressor`, que prevê a média do alvo, como referência mínima de desempenho (*baseline*).
+
+O dataset foi dividido em 80% para treinamento e 20% para teste. Os modelos foram avaliados utilizando MAE, RMSE e R².
+
+**Resultados no conjunto de teste:**
+
+| Modelo | MAE ↓ | RMSE ↓ | R² ↑ |
+|---|---:|---:|---:|
+| DummyRegressor | 13,84 | 16,80 | -0,001 |
+| Ridge | 8,59 | **10,39** | **0,617** |
+| Random Forest | **8,31** | 10,43 | 0,614 |
+
+Ambos os modelos de regressão superaram o baseline, indicando que as features selecionadas contêm informações úteis para prever o `klike_score`, mesmo sem métricas de performance pós-veiculação.
+
+### 2.3 Qual modelo foi selecionado?
+
+Embora o Random Forest tenha apresentado MAE ligeiramente inferior, a comparação entre treino e teste revelou sinais expressivos de *overfitting*: seu R² caiu de 0,940 para 0,614, enquanto o MAE aumentou de 2,93 para 8,31 pontos.
+
+Para complementar a avaliação, foi realizada validação cruzada com cinco folds no conjunto de treinamento:
+
+| Modelo | MAE médio | Desvio-padrão |
+|---|---:|---:|
+| Ridge | 8,06 | 0,50 |
+| Random Forest | **7,80** | 0,53 |
+
+Os modelos apresentaram resultados próximos, com pequena vantagem do Random Forest no MAE médio.
+
+**O Ridge foi selecionado como modelo final.** Apesar da pequena vantagem preditiva do Random Forest, o Ridge apresentou menor diferença entre treino e teste e permite uma interpretação mais direta das relações entre as features e o score.
+
+No conjunto de teste, o modelo selecionado obteve MAE de **8,59 pontos** e R² de **0,617**, reduzindo o erro absoluto médio em aproximadamente 38% em relação ao baseline.
+
+### 2.4 Quais variáveis mais se relacionam com o score?
+
+Para interpretar o modelo selecionado, foram analisados os coeficientes do Ridge.
+
+Os maiores coeficientes positivos foram observados para:
+
+| Atributo | Coeficiente |
+|---|---:|
+| Presença de hook | +16,88 |
+| Presença de rosto humano | +10,42 |
+| Presença de CTA | +8,06 |
+| Presença de legendas | +7,48 |
+
+Como esses atributos são booleanos, os coeficientes representam diferenças no score previsto entre a ausência e a presença de cada característica, mantendo as demais variáveis constantes.
+
+Esses resultados apresentam conexões com a EDA: hooks e rostos humanos estiveram associados a maiores medianas de CTR e engajamento, enquanto CTAs apresentaram associações positivas com métricas de conversão e retorno financeiro.
+
+A densidade de texto apresentou coeficiente negativo (-2,49), coerente com as associações negativas observadas na análise exploratória.
+
+Entretanto, a magnitude dos coeficientes não representa uma medida diretamente comparável de importância entre todas as features, devido às diferenças de escala e codificação.
+
+### Limitações da modelagem
+
+O dataset contém apenas 500 campanhas, e a fórmula utilizada para calcular o `klike_score` não foi disponibilizada. Portanto, não é possível determinar todos os fatores que influenciam sua construção.
+
+Além disso, os coeficientes descrevem associações aprendidas pelo modelo, não efeitos causais. Alterar uma característica do vídeo não garante a variação correspondente no score ou nas métricas de performance.
+
+Essas limitações serão consideradas na construção do Recommendations Engine, que deverá utilizar os resultados como evidências para formular hipóteses de otimização, sem prometer melhorias garantidas.
