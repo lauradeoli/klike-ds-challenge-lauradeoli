@@ -1,5 +1,6 @@
 # Funções ----------------------------------------------------------------------------------------------------------------------
 import pandas as pd
+import numpy as np
 
 def melhor_alternativa(dados, plataforma, atributo, metrica, valor_atual):
     df = dados[dados['platform'] == plataforma]
@@ -224,3 +225,13 @@ def apresentar_recomendacoes(campanha, resultado):
 
     print("-" * 65)
     print("Nota: as recomendações são baseadas em associações observadas no dataset e não garantem melhorias de performance.")
+
+def preparar_dados(df):
+    dados = df.copy()
+
+    dados['duration_group'] = pd.qcut(dados['video_duration_s'], q=3, labels=['short', 'medium', 'long'])
+    dados['audio_group'] = pd.qcut(dados['music_voice_ratio'], q=3, labels=['low_music', 'medium_music', 'high_music'])
+    dados["conversion_rate"] = (dados["conversions"] / dados["clicks"].replace(0, np.nan))
+    dados["watch_time_ratio"] = dados["avg_watch_time_s"] / dados["video_duration_s"].replace(0, np.nan)
+
+    return dados
