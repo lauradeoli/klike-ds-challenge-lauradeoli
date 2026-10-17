@@ -281,6 +281,10 @@ Desenvolvi uma interface interativa com `ipywidgets`, na qual é possível infor
 
 O protótipo está disponível em **[`notebooks/recommendations_engine.ipynb`](notebooks/recommendations_engine.ipynb)**.
 
+![Interface interativa do Klike Recommendations Engine](images/recommendations_engine.png)
+
+*Figura — Exemplo de execução do Recommendations Engine para a campanha KLK-0090, com cinco recomendações baseadas em padrões observados no dataset.*
+
 A construção da lógica, as decisões metodológicas e os testes estão documentados em **[`notebooks/parte3_recomendacoes.ipynb`](notebooks/parte3_recomendacoes.ipynb)**.
 
 ### Limitações
