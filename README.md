@@ -17,7 +17,7 @@ O projeto tem como objetivo analisar dados de campanhas publicitárias em vídeo
 **1. Clone o repositório**
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/lauradeoli/klike-ds-challenge-lauradeoli.git
 cd klike-ds-challenge-lauradeoli
 ```
 
@@ -47,16 +47,41 @@ source env/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-Abra o arquivo `notebooks/01_eda.ipynb` para iniciar a exploração dos dados.
+Abra o arquivo `notebooks/parte1_eda.ipynb` para iniciar a exploração dos dados. Depois, siga para `notebooks/parte2_modelagem.ipynb` para a construção do modelo. Então, `notebooks/parte3_recomendacoes.ipynb` apresenta a construção e lógica por trás do sistema de recomendações. Por último, `notebooks/recommendations_engine.ipynb` representa o notebook interativo onde é possível testar as recomendações para cada campanha presente no dataset. 
+
+### Executando o Recommendations Engine
+
+Após instalar as dependências e selecionar o ambiente Python no Jupyter ou VS Code:
+
+1. Abra `notebooks/recommendations_engine.ipynb`.
+2. Execute as células na ordem apresentada.
+3. Informe o número de uma campanha no campo interativo (por exemplo, `90` para `KLK-0090`).
+4. Clique em **Gerar recomendações**.
+
+O sistema carrega e prepara automaticamente os dados antes de executar a análise.
+
+As recomendações serão exibidas abaixo do formulário, acompanhadas das evidências observadas.
+
+**Observação:** execute o notebook a partir da pasta `notebooks/`, conforme a configuração atual dos caminhos do projeto.
+
 
 ## Estrutura do projeto
 
 ```text
-klike-data-science-challenge/
-├── data/                 # Base de dados
-├── notebooks/            # Análise exploratória, modelagem e recomendações
-├── src/                  # Sistema de recomendações
-├── models/
+klike-ds-challenge-lauradeoli/
+├── data/
+│   └── klike_challenge_dataset.csv
+├── images/
+│   ├── CTR-hook-plataforma-1.png
+│   ├── CTR-texto-plataforma-3.png
+│   └── ROAS-hook-plataforma-2.png
+├── notebooks/
+│   ├── parte1_eda.ipynb
+│   ├── parte2_modelagem.ipynb
+│   ├── parte3_recomendacoes.ipynb
+│   └── recommendations_engine.ipynb
+├── src/
+│   └── recommendations.py
 ├── .gitignore
 ├── README.md
 └── requirements.txt
@@ -218,3 +243,59 @@ O dataset contém apenas 500 campanhas, e a fórmula utilizada para calcular o `
 Além disso, os coeficientes descrevem associações aprendidas pelo modelo, não efeitos causais. Alterar uma característica do vídeo não garante a variação correspondente no score ou nas métricas de performance.
 
 Essas limitações serão consideradas na construção do Recommendations Engine, que deverá utilizar os resultados como evidências para formular hipóteses de otimização, sem prometer melhorias garantidas.
+
+## Parte 3 — Recommendations Engine
+
+### Abordagem
+
+O objetivo desta etapa foi desenvolver um sistema capaz de analisar uma campanha e gerar sugestões específicas de melhoria do criativo. Optei por uma abordagem baseada em **comparações de medianas de performance por plataforma e atributo**, priorizando a interpretabilidade e a simplicidade da solução.
+
+O engine analisa oito características modificáveis do vídeo em relação a cinco métricas: CTR, ROAS, taxa de engajamento, taxa de conversão e proporção assistida do vídeo. Para evitar recomendações baseadas em grupos muito pequenos ou diferenças pouco expressivas, estabeleci dois critérios: **pelo menos 10 observações válidas por grupo e diferença mínima de 10% entre as medianas**.
+
+### Geração e priorização das recomendações
+
+O sistema identifica alternativas associadas a melhores resultados dentro da mesma plataforma e seleciona até cinco recomendações, evitando sugestões repetidas para um mesmo atributo.
+
+A seleção considera inicialmente a métrica principal de cada campanha, definida a partir de seu objetivo, e depois incorpora oportunidades relacionadas às demais métricas. As recomendações finais são ordenadas pela diferença percentual observada.
+
+Para tornar as sugestões mais acionáveis, alterações de duração e proporção música/voz são apresentadas com valores numéricos concretos, calculados a partir das medianas dos grupos recomendados.
+
+### Protótipo interativo
+
+Desenvolvi uma interface interativa com `ipywidgets`, na qual é possível informar o identificador de uma campanha existente e visualizar as recomendações em linguagem natural, acompanhadas das métricas e diferenças percentuais que as fundamentam.
+
+O protótipo está disponível em **[`notebooks/recommendations_engine.ipynb`](notebooks/recommendations_engine.ipynb)**.
+
+A construção da lógica, as decisões metodológicas e os testes estão documentados em **[`notebooks/parte3_recomendacoes.ipynb`](notebooks/parte3_recomendacoes.ipynb)**.
+
+### Limitações
+
+As recomendações são baseadas em **associações observadas no dataset**, e não em relações causais. Portanto, as diferenças percentuais representam comparações entre grupos, não previsões de ganhos garantidos.
+
+Outra limitação é que as alterações são analisadas individualmente, sem estimar como diferentes recomendações poderiam interagir quando aplicadas em conjunto.
+
+Durante o desenvolvimento, também explorei a possibilidade de utilizar o Ridge da Parte 2 para estimar alterações no `klike_score`. Pensei que, ao final das até 5 recomendações no sistema, ele poderia mostrar o aumento no `klike_score` caso todas elas tivessem sido implementadas. Entretanto, encontrei situações em que recomendações favoráveis às métricas de marketing reduziam o score previsto. Optei por manter o engine orientado às métricas de performance e discutir essa divergência como oportunidade de evolução futura.
+
+## Parte 4 — Visão de Produto
+
+### 1. Quais features adicionais eu extrairia dos vídeos?
+
+Com acesso aos vídeos originais, eu buscaria extrair características que permitissem entender não apenas **quais elementos estão presentes no criativo, mas como eles são utilizados**. Algumas features que considero interessantes são o ritmo de edição, o sentimento transmitido pela narração/áudio, o tempo de exposição de rostos humanos, o tipo de música e o momento em que o produto aparece pela primeira vez.
+
+Acredito que essas informações poderiam tornar as recomendações mais específicas e úteis para a criação de novos anúncios. Atualmente, o engine consegue sugerir, por exemplo, a inclusão de um hook nos primeiros segundos, mas não consegue indicar como esse hook poderia ser construído. Com uma análise mais detalhada do conteúdo audiovisual, seria possível investigar quais abordagens estão associadas a melhores resultados e oferecer sugestões que vão além de simplesmente adicionar ou remover elementos do vídeo.
+
+### 2. Como eu colocaria o Recommendations Engine em produção?
+
+Eu manteria a lógica geral do protótipo, mas separaria o sistema em componentes para facilitar sua integração à plataforma Klike. Imagino uma arquitetura em que o usuário envia ou seleciona um criativo pela interface, enquanto um serviço de processamento extrai suas características e consulta os dados históricos das campanhas. O Recommendations Engine funcionaria como um serviço Python, disponibilizado por uma API, responsável por analisar os atributos e retornar recomendações estruturadas para a interface.
+
+Para garantir escalabilidade, a extração de características dos vídeos poderia ocorrer de forma assíncrona, utilizando uma fila de tarefas, evitando que processamentos mais demorados bloqueassem a aplicação. As recomendações seriam geradas a partir de estatísticas armazenadas e atualizadas periodicamente, enquanto novas campanhas poderiam ser incorporadas continuamente à base. Também considero importante manter um monitoramento dos resultados e uma revisão periódica por profissionais, para identificar inconsistências e avaliar a qualidade das sugestões.
+
+Em uma evolução do produto, gostaria de integrar um modelo capaz de considerar **combinações de alterações**, e não apenas atributos isolados, como acontece no protótipo atual. Isso permitiria investigar como diferentes recomendações interagem e estimar seus efeitos conjuntos sobre as métricas de performance, tornando o sistema mais próximo de uma ferramenta de apoio à otimização de criativos.
+
+### 3. O que eu faria se tivesse mais tempo?
+
+Minha primeira prioridade seria investigar melhor a relação entre o **Klike Score e as métricas de performance**. Durante o desenvolvimento, tentei utilizar o Ridge para estimar como as recomendações afetariam o score, mas encontrei situações em que alterações associadas a melhores resultados de marketing reduziam a pontuação prevista. Gostaria de entender melhor os fatores considerados no cálculo do Klike Score e explorar uma priorização que levasse em conta tanto a qualidade do criativo quanto seus resultados de performance, mantendo o sistema alinhado à proposta do Klike.
+
+Também aprofundaria a análise incluindo informações como público-alvo e data de veiculação. Seria interessante investigar, por exemplo, se determinados tipos de criativo apresentam comportamentos diferentes entre faixas etárias ou dias da semana. Outra melhoria importante seria identificar conflitos entre recomendações e trabalhar com **otimização multiobjetivo**, considerando possíveis efeitos positivos e negativos sobre diferentes indicadores.
+
+Por fim, considero que uma das principais limitações do projeto é o tamanho do dataset, com apenas 500 campanhas distribuídas entre diferentes plataformas e características. Isso restringe a possibilidade de realizar comparações mais específicas sem reduzir excessivamente o número de observações por grupo. Além disso, as recomendações são baseadas em associações observadas, sem demonstrar relações de causa e efeito. Com uma base maior, dados reais e mais tempo, gostaria de avaliar a estabilidade dessas relações e realizar testes A/B para verificar se as alterações sugeridas realmente produzem melhorias nas campanhas.
