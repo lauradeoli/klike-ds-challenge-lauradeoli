@@ -168,7 +168,7 @@ def descrever_evidencia(recomendacao, plataforma):
     diferenca = recomendacao["diferenca_pct"]
     nome_metrica = nomes_metricas[metrica]
 
-    return (f"Campanhas com essa característica na plataforma " f"{plataforma} apresentaram {nome_metrica} mediano " 
+    return (f"Campanhas com essa característica na plataforma " f"{plataforma} apresentaram {nome_metrica} mediana " 
             f"{diferenca:.1f}% superior ao grupo atual.")
 
 def apresentar_recomendacoes(campanha, resultado):

@@ -1,6 +1,8 @@
 # Klike Data Science Challenge
 
-Desafio técnico de Ciência de Dados desenvolvido como parte do processo seletivo para estágio de férias da Klike.ai.
+**Autora:** Laura de Oliveira  
+**Processo seletivo:** Estágio de Férias — Klike.ai / Millai  
+**Data:** Outubro de 2026
 
 O projeto tem como objetivo analisar dados de campanhas publicitárias em vídeo, identificar padrões de desempenho, desenvolver um modelo preditivo para o `klike_score` e construir um sistema de recomendações para otimização de criativos.
 
