@@ -135,20 +135,33 @@ Foram selecionadas três visualizações para comunicar os principais insights d
 
 ![Gráfico 1 — CTR mediano por presença de hook e plataforma](images/CTR-hook-plataforma-1.png)
 
+#### Insight 1 — Presença de hook e CTR
 
-A presença de hook está associada a CTR mediano superior nas três plataformas, destacando sua possível relevância para campanhas que buscam atrair cliques.
+A presença de um hook nos primeiros três segundos está associada a um CTR mediano superior nas três plataformas analisadas. Essa diferença é especialmente expressiva no LinkedIn, sugerindo que a abertura do vídeo pode ser um elemento relevante para despertar o interesse do público e incentivar cliques.
+
+**Para o time de marketing**, esse resultado indica que vale a pena dar atenção à construção dos primeiros segundos dos criativos. Uma possibilidade seria testar diferentes formas de apresentar a mensagem inicial, como perguntas, demonstrações do produto ou afirmações que despertem curiosidade. Entretanto, os dados mostram apenas a presença ou ausência do hook, sem informações sobre seu conteúdo ou qualidade. Portanto, não é possível concluir qual abordagem seria mais eficiente, nem afirmar que a inclusão de um hook, isoladamente, aumentaria o CTR.
 
 **Gráfico 2 — ROAS mediano por presença de hook e plataforma**
 
 ![Gráfico 2 — ROAS mediano por presença de hook e plataforma](images/ROAS-hook-plataforma-2.png)
 
-A associação entre hook e retorno financeiro varia conforme a plataforma. O resultado mostra por que não devemos utilizar apenas o CTR como referência para avaliar a performance.
+#### Insight 2 — Presença de hook e ROAS
+
+Embora campanhas com hook apresentem CTR mediano superior nas três plataformas, a relação com o retorno financeiro não segue o mesmo padrão. No TikTok, campanhas com hook apresentam **ROAS mediano aproximadamente 35,9% maior**, enquanto no Meta o ROAS mediano é **27,1% menor**. No LinkedIn, não foi observada diferença entre os grupos.
+
+Esse contraste é particularmente interessante porque mostra que uma característica associada a mais cliques não necessariamente está associada a maior retorno financeiro. Para campanhas cujo objetivo principal é gerar receita, não seria suficiente recomendar a inclusão de um hook apenas com base no CTR. **A decisão precisa considerar tanto a plataforma quanto a métrica que se deseja otimizar.** No TikTok, por exemplo, os resultados justificariam investigar mais a fundo o uso de hooks, enquanto no Meta seria importante entender por que o mesmo atributo apresenta uma associação diferente com o ROAS. Essas comparações são observacionais e podem ser influenciadas por outras características das campanhas.
 
 **Gráfico 3 — CTR mediano por densidade de texto e plataforma**
 
 ![Gráfico 3 — CTR mediano por densidade de texto e plataforma](images/CTR-texto-plataforma-3.png)
 
-Criativos com alta densidade de texto apresentam CTR mediano inferior aos demais grupos nas três plataformas, sugerindo uma possível oportunidade de otimização.
+#### Insight 3 — Densidade de texto e CTR
+
+Criativos com alta densidade de texto apresentam CTR mediano inferior aos demais grupos nas três plataformas, com a diferença mais expressiva no Meta. Entretanto, a relação não é simplesmente de que menos texto significa melhor desempenho: no Meta e no LinkedIn, a densidade média apresenta CTR mediano ligeiramente superior à baixa.
+
+**Para o time de marketing**, esse resultado sugere que a quantidade de texto exibida na tela merece atenção durante a criação dos anúncios. Em vez de eliminar textos indiscriminadamente, seria interessante testar versões com mensagens mais objetivas, priorizando informações essenciais e evitando excesso de elementos visuais. Ao mesmo tempo, o desempenho relativamente melhor da densidade média em algumas plataformas indica que o texto também pode contribuir para comunicar a proposta do anúncio. Assim, o objetivo não seria necessariamente utilizar o mínimo possível de texto, mas encontrar um equilíbrio adequado ao criativo e à plataforma.
+
+Como a análise considera apenas categorias de densidade, não é possível determinar a quantidade ideal de texto ou avaliar aspectos como legibilidade, posicionamento e conteúdo das mensagens. Esses fatores poderiam ser investigados em análises futuras.
 
 ### Limitações da análise
 
