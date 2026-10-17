@@ -1,12 +1,29 @@
-# Virtual environment
-env/
 
-# Python
+# Ambiente virtual
+env/
+venv/
+.venv/
+
+# Cache e arquivos compilados do Python
 __pycache__/
 *.py[cod]
 
-# Jupyter
+# Arquivos temporários do Jupyter
 .ipynb_checkpoints/
 
-# Environment variables
+# Configurações locais do VS Code
+.vscode/
+
+# Variáveis de ambiente e credenciais
 .env
+.env.*
+!.env.example
+
+# Cache de testes e ferramentas
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
