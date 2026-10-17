@@ -106,29 +106,10 @@ def aplicar_recomendacoes(campanha, recomendacoes, dados):
             valor_recomendado = dados.loc[(dados["platform"] == campanha["platform"]) & (dados[atributo] == rec["valor_recomendado"]), 
                                           coluna_original].median()
             campanha_modificada[coluna_original] = float(valor_recomendado)
-        else:
-            campanha_modificada[atributo] = rec["valor_recomendado"]
+            
+        campanha_modificada[atributo] = rec["valor_recomendado"]
             
     return campanha_modificada
-
-def avaliar_score_candidatas(camapanha, candidatas, dados, preprocessor, ridge, features):
-    candidatas_avaliadas = []
-
-    X_original = camapanha.to_frame().T[features]
-    score_original = ridge.predict(preprocessor.transform(X_original))[0]
-
-    for rec in candidatas:
-        campanha_modificada = aplicar_recomendacoes(camapanha, [rec], dados)
-        X_modificada = campanha_modificada.to_frame().T[features]
-        
-        score_modificado = ridge.predict(preprocessor.transform(X_modificada))[0]
-
-        rec_avaliada = rec.copy()
-        rec_avaliada["delta_score"] = float(score_modificado - score_original)
-
-        candidatas_avaliadas.append(rec_avaliada)
-
-    return candidatas_avaliadas
 
 def recommendations_engine(campanha, dados):
     candidatas = gerar_candidatas(campanha, dados)
